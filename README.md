@@ -17,7 +17,7 @@ Change pip to pip3 below.
 # Install Dependencies
 ```
 RUN pip install -r requirements.txt
-
+```
 # Running the script
 
 ```
