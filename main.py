@@ -38,7 +38,7 @@ def main():
     # grab authentication vars from .env
     auth = HTTPBasicAuth(settings.USERNAME, settings.PASSWORD)
     response = requests.get(settings.BB_API_URL, auth=auth)
-    excel_file = settings.EXCEL_OUTPUT_DIRECTORY + 'output.xlsx'
+    excel_file = settings.EXCEL_OUTPUT_DIRECTORY + 'bitbucket-repos.xlsx'
 
     data = json.loads(response.text)
     projects = data['values']
