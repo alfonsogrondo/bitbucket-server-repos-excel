@@ -38,18 +38,20 @@ def main():
     # grab authentication vars from .env
     auth = HTTPBasicAuth(settings.USERNAME, settings.PASSWORD)
     response = requests.get(settings.BB_API_URL, auth=auth)
+    excel_file = settings.EXCEL_OUTPUT_DIRECTORY + 'output.xlsx'
 
     data = json.loads(response.text)
     projects = data['values']
     GetNestedURL(projects)
    
     projects_df = pd.DataFrame.from_dict(projects)
-    projects_df.to_excel(settings.EXCEL_OUTPUT_DIRECTORY + 'output.xlsx', sheet_name='Bitbucket Projects')
+    projects_df.to_excel(excel_file, sheet_name='Bitbucket Projects')
     # output the project repositories to sheets within an Excel workbook
     for item in projects:
         project_df = GetRepos(item['key'], auth)
-        with pd.ExcelWriter('output.xlsx', mode='a') as writer:
+        with pd.ExcelWriter(excel_file, mode='a') as writer:
             project_df.to_excel(writer, sheet_name=item['key'])
+
 
 main()
     
